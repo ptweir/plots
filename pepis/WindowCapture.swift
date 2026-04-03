@@ -25,11 +25,19 @@ enum WindowCapture {
                     appBundleID: bundleID,
                     appName: app.localizedName ?? bundleID,
                     windowIndex: index,
+                    windowTitle: axTitle(of: window),
                     frame: frame
                 ))
             }
         }
         return snapshots
+    }
+
+    private static func axTitle(of element: AXUIElement) -> String? {
+        var ref: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(element, kAXTitleAttribute as CFString, &ref) == .success,
+              let title = ref as? String, !title.isEmpty else { return nil }
+        return title
     }
 
     private static func axFrame(of element: AXUIElement) -> CGRect? {
