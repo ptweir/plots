@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		20ED5E0B13667D1138C1C36F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C351A70E6386571EBE49CF9 /* main.swift */; };
 		CCF61BBEE21CC239F868E559 /* ModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F05EC601082B906371F53A /* ModelsTests.swift */; };
+		D596CEC20680720D84517FD8 /* GroupStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCA5EF2D04C6676D575CA1D /* GroupStore.swift */; };
 		E976152341B57F1F93065403 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF6B6978DDBEC1B99A46AD6 /* Models.swift */; };
+		F744EAD29A7C4A96FE3A7424 /* GroupStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3315A00B16EB28A1EC05E016 /* GroupStoreTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,10 +26,12 @@
 
 /* Begin PBXFileReference section */
 		13B3D686819E74AEC2CD4DCE /* pepis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pepis.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3315A00B16EB28A1EC05E016 /* GroupStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStoreTests.swift; sourceTree = "<group>"; };
 		3FF6B6978DDBEC1B99A46AD6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		54754275599186B6A93B36F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		60F05EC601082B906371F53A /* ModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsTests.swift; sourceTree = "<group>"; };
 		8C351A70E6386571EBE49CF9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		DCCA5EF2D04C6676D575CA1D /* GroupStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStore.swift; sourceTree = "<group>"; };
 		E8CA0F88AD700A0DD03B5AF3 /* pepis-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "pepis-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -35,6 +39,7 @@
 		851304BF58FBE1E08A711A38 /* pepis */ = {
 			isa = PBXGroup;
 			children = (
+				DCCA5EF2D04C6676D575CA1D /* GroupStore.swift */,
 				54754275599186B6A93B36F7 /* Info.plist */,
 				8C351A70E6386571EBE49CF9 /* main.swift */,
 				3FF6B6978DDBEC1B99A46AD6 /* Models.swift */,
@@ -54,6 +59,7 @@
 		A2F20A790858368204F14E02 /* pepis-tests */ = {
 			isa = PBXGroup;
 			children = (
+				3315A00B16EB28A1EC05E016 /* GroupStoreTests.swift */,
 				60F05EC601082B906371F53A /* ModelsTests.swift */,
 			);
 			path = "pepis-tests";
@@ -142,6 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F744EAD29A7C4A96FE3A7424 /* GroupStoreTests.swift in Sources */,
 				CCF61BBEE21CC239F868E559 /* ModelsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -150,6 +157,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D596CEC20680720D84517FD8 /* GroupStore.swift in Sources */,
 				E976152341B57F1F93065403 /* Models.swift in Sources */,
 				20ED5E0B13667D1138C1C36F /* main.swift in Sources */,
 			);
