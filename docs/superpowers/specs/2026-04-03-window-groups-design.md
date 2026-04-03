@@ -8,7 +8,7 @@
 
 ## Overview
 
-A macOS menu bar app that lets you snapshot all open application windows (positions and sizes) into named groups, and restore them later. Groups persist across restarts.
+A macOS menu bar app that lets you snapshot all open application windows (positions and sizes) into named groups, and restore them later. Groups persist across restarts. Each group also has an associated markdown context file for storing notes and AI agent memory.
 
 ---
 
@@ -44,12 +44,14 @@ struct Group: Codable, Identifiable {
 
 ### Persistence
 
-Groups are stored as JSON at:
 ```
-~/Library/Application Support/pepis/groups.json
+~/Library/Application Support/pepis/
+  groups.json          ← structured metadata (id, name, createdAt, windows)
+  context/
+    {group-id}.md      ← freeform notes and AI agent context, one file per group
 ```
 
-`GroupStore` reads on launch and writes on every mutation (create, delete).
+`GroupStore` reads `groups.json` on launch and writes on every mutation (create, delete). Context files are created empty when a group is saved, and are never modified by the app — they are owned by the user and AI agents.
 
 ---
 
@@ -58,17 +60,18 @@ Groups are stored as JSON at:
 ```
 [⊞ menu bar icon]
   ── Groups ──
-  Morning setup  ▶  [Restore] [Delete]
-  Deep work      ▶  [Restore] [Delete]
-  Code review    ▶  [Restore] [Delete]
+  Morning setup  ▶  [Restore] [Edit context] [Delete]
+  Deep work      ▶  [Restore] [Edit context] [Delete]
+  Code review    ▶  [Restore] [Edit context] [Delete]
   ─────────────────
   + Save current windows as…
   ─────────────────
   Quit
 ```
 
-- Clicking a group name opens a submenu with **Restore** and **Delete**
-- "Save current windows as…" opens a small input dialog for the group name
+- Clicking a group name opens a submenu with **Restore**, **Edit context**, and **Delete**
+- **Edit context** opens the group's `{group-id}.md` file in the default system editor (via `NSWorkspace.open`)
+- "Save current windows as…" opens a small input dialog for the group name; creates an empty context file alongside
 - The app has no Dock icon (`LSUIElement = YES` in `Info.plist`)
 
 ---
@@ -105,6 +108,7 @@ On first launch, the app calls `AXIsProcessTrustedWithOptions` with the prompt o
 - **App fails to launch:** Skip that window, continue restoring others
 - **No groups saved yet:** Show placeholder text "No groups yet" in menu
 - **Malformed JSON on disk:** Start fresh with empty groups, log the error
+- **Missing context file:** Re-create it as empty on next open (non-fatal)
 
 ---
 
