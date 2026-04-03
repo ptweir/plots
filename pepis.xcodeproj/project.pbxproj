@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E55D94753E772FC32C2E7D7 /* WindowRestorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083A130E9976EEEEAAA2A692 /* WindowRestorer.swift */; };
 		20ED5E0B13667D1138C1C36F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C351A70E6386571EBE49CF9 /* main.swift */; };
 		CCF61BBEE21CC239F868E559 /* ModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F05EC601082B906371F53A /* ModelsTests.swift */; };
 		CF3E3F43C4A4537059F829DD /* WindowCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604FFC02660A665ED4162524 /* WindowCapture.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		083A130E9976EEEEAAA2A692 /* WindowRestorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowRestorer.swift; sourceTree = "<group>"; };
 		13B3D686819E74AEC2CD4DCE /* pepis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pepis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3315A00B16EB28A1EC05E016 /* GroupStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStoreTests.swift; sourceTree = "<group>"; };
 		3FF6B6978DDBEC1B99A46AD6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
@@ -46,6 +48,7 @@
 				8C351A70E6386571EBE49CF9 /* main.swift */,
 				3FF6B6978DDBEC1B99A46AD6 /* Models.swift */,
 				604FFC02660A665ED4162524 /* WindowCapture.swift */,
+				083A130E9976EEEEAAA2A692 /* WindowRestorer.swift */,
 			);
 			path = pepis;
 			sourceTree = "<group>";
@@ -163,6 +166,7 @@
 				D596CEC20680720D84517FD8 /* GroupStore.swift in Sources */,
 				E976152341B57F1F93065403 /* Models.swift in Sources */,
 				CF3E3F43C4A4537059F829DD /* WindowCapture.swift in Sources */,
+				0E55D94753E772FC32C2E7D7 /* WindowRestorer.swift in Sources */,
 				20ED5E0B13667D1138C1C36F /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
