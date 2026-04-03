@@ -18,18 +18,18 @@ schemes:
           randomExecutionOrder: false
 targets:
   pepis:
-    type: application
+    type: framework
     platform: macOS
     sources:
       - pepis
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.pepis.app
-        INFOPLIST_FILE: pepis/Info.plist
         SWIFT_VERSION: "5.9"
         CODE_SIGN_IDENTITY: "-"
         CODE_SIGNING_REQUIRED: "NO"
         CODE_SIGNING_ALLOWED: "NO"
+        DEFINES_MODULE: "YES"
   pepis-tests:
     type: bundle.unit-test
     platform: macOS
