@@ -1,5 +1,6 @@
 // pepis/MenuController.swift
 import AppKit
+import ApplicationServices
 
 final class MenuController: NSObject {
     private let store: GroupStore
@@ -15,6 +16,18 @@ final class MenuController: NSObject {
 
     func rebuild() {
         let menu = NSMenu()
+
+        // Warn if Accessibility permission is not granted
+        if !AXIsProcessTrusted() {
+            let warn = NSMenuItem(
+                title: "⚠ Accessibility access required",
+                action: #selector(openAccessibilitySettings),
+                keyEquivalent: ""
+            )
+            warn.target = self
+            menu.addItem(warn)
+            menu.addItem(.separator())
+        }
 
         if store.groups.isEmpty {
             let empty = NSMenuItem(title: "No groups yet", action: nil, keyEquivalent: "")
@@ -114,5 +127,10 @@ final class MenuController: NSObject {
             windows: WindowCapture.captureAll()
         )
         store.save(group: group)
+    }
+
+    @objc private func openAccessibilitySettings() {
+        let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!
+        NSWorkspace.shared.open(url)
     }
 }
