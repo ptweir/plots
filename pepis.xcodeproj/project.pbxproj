@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2E0ABD49B9A7C23AAF7F6399 /* pepis.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4E299B87A613F50AF1DEFFC5 /* pepis.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		566B9925D7C2C9768CAFD97E /* pepis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E299B87A613F50AF1DEFFC5 /* pepis.framework */; };
+		20ED5E0B13667D1138C1C36F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C351A70E6386571EBE49CF9 /* main.swift */; };
 		CCF61BBEE21CC239F868E559 /* ModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F05EC601082B906371F53A /* ModelsTests.swift */; };
 		E976152341B57F1F93065403 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF6B6978DDBEC1B99A46AD6 /* Models.swift */; };
 /* End PBXBuildFile section */
@@ -23,44 +22,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		D9B02746879D02C93B8759E7 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				2E0ABD49B9A7C23AAF7F6399 /* pepis.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
+		13B3D686819E74AEC2CD4DCE /* pepis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pepis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FF6B6978DDBEC1B99A46AD6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		4E299B87A613F50AF1DEFFC5 /* pepis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = pepis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		54754275599186B6A93B36F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		60F05EC601082B906371F53A /* ModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsTests.swift; sourceTree = "<group>"; };
+		8C351A70E6386571EBE49CF9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		E8CA0F88AD700A0DD03B5AF3 /* pepis-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "pepis-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		A7551C1106DF454B63A79C16 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				566B9925D7C2C9768CAFD97E /* pepis.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		851304BF58FBE1E08A711A38 /* pepis */ = {
 			isa = PBXGroup;
 			children = (
 				54754275599186B6A93B36F7 /* Info.plist */,
+				8C351A70E6386571EBE49CF9 /* main.swift */,
 				3FF6B6978DDBEC1B99A46AD6 /* Models.swift */,
 			);
 			path = pepis;
@@ -87,7 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				E8CA0F88AD700A0DD03B5AF3 /* pepis-tests.xctest */,
-				4E299B87A613F50AF1DEFFC5 /* pepis.framework */,
+				13B3D686819E74AEC2CD4DCE /* pepis.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -100,8 +76,6 @@
 			buildConfigurationList = 2263B0D78A0A2091EE6595B7 /* Build configuration list for PBXNativeTarget "pepis-tests" */;
 			buildPhases = (
 				73FE911E0A8BC5F667227990 /* Sources */,
-				A7551C1106DF454B63A79C16 /* Frameworks */,
-				D9B02746879D02C93B8759E7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -129,8 +103,8 @@
 			packageProductDependencies = (
 			);
 			productName = pepis;
-			productReference = 4E299B87A613F50AF1DEFFC5 /* pepis.framework */;
-			productType = "com.apple.product-type.framework";
+			productReference = 13B3D686819E74AEC2CD4DCE /* pepis.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -177,6 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E976152341B57F1F93065403 /* Models.swift in Sources */,
+				20ED5E0B13667D1138C1C36F /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,26 +169,19 @@
 		0995AB7A8D18B6EC2F26D1B2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGNING_ALLOWED = NO;
 				CODE_SIGNING_REQUIRED = NO;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = pepis/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pepis.app;
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.9;
-				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
@@ -283,7 +251,7 @@
 		65AD9A3B587870D3B9EC0635 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "";
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGNING_ALLOWED = NO;
 				CODE_SIGNING_REQUIRED = NO;
 				CODE_SIGN_IDENTITY = "-";
@@ -296,7 +264,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pepis.pepis-tests";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.9;
-				TEST_HOST = "";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pepis.app/Contents/MacOS/pepis";
 			};
 			name = Release;
 		};
@@ -359,33 +327,26 @@
 		ACA42A32273D08E898CD6F01 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGNING_ALLOWED = NO;
 				CODE_SIGNING_REQUIRED = NO;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = pepis/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pepis.app;
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.9;
-				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		D64F32E6ECC5168CBC903001 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "";
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGNING_ALLOWED = NO;
 				CODE_SIGNING_REQUIRED = NO;
 				CODE_SIGN_IDENTITY = "-";
@@ -398,7 +359,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pepis.pepis-tests";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.9;
-				TEST_HOST = "";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pepis.app/Contents/MacOS/pepis";
 			};
 			name = Debug;
 		};
