@@ -17,15 +17,14 @@ enum WindowRestorer {
         }
     }
 
-    /// Minimizes all windows for each app in the given set of bundle IDs.
-    static func minimizeApps(_ bundleIDs: Set<String>) {
-        for bundleID in bundleIDs {
+    /// Minimizes the specific windows described by the given snapshots.
+    static func minimizeWindows(_ snapshots: [WindowSnapshot]) {
+        let byApp = Dictionary(grouping: snapshots, by: { $0.appBundleID })
+        for (bundleID, windowSnapshots) in byApp {
             guard let app = runningApp(bundleID: bundleID) else { continue }
-            let axApp = AXUIElementCreateApplication(app.processIdentifier)
-            var windowsRef: CFTypeRef?
-            guard AXUIElementCopyAttributeValue(axApp, kAXWindowsAttribute as CFString, &windowsRef) == .success,
-                  let windows = windowsRef as? [AXUIElement] else { continue }
-            for window in windows {
+            let axWindows = axWindowList(for: app)
+            for snapshot in windowSnapshots {
+                guard let window = matchWindow(snapshot, in: axWindows) else { continue }
                 AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, kCFBooleanTrue)
             }
         }
@@ -38,20 +37,26 @@ enum WindowRestorer {
             .first { $0.bundleIdentifier == bundleID }
     }
 
-    private static func applySnapshot(_ snapshot: WindowSnapshot, isMinimized: Bool, to app: NSRunningApplication) {
+    private static func axWindowList(for app: NSRunningApplication) -> [AXUIElement] {
         let axApp = AXUIElementCreateApplication(app.processIdentifier)
-        var windowsRef: CFTypeRef?
-        guard AXUIElementCopyAttributeValue(axApp, kAXWindowsAttribute as CFString, &windowsRef) == .success,
-              let windows = windowsRef as? [AXUIElement] else { return }
+        var ref: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(axApp, kAXWindowsAttribute as CFString, &ref) == .success,
+              let windows = ref as? [AXUIElement] else { return [] }
+        return windows
+    }
 
-        // Prefer matching by title (stable across reordering); fall back to index.
-        let window: AXUIElement?
+    /// Finds the AX window matching a snapshot: title first, index as fallback.
+    private static func matchWindow(_ snapshot: WindowSnapshot, in windows: [AXUIElement]) -> AXUIElement? {
         if let title = snapshot.windowTitle, !title.isEmpty {
-            window = windows.first { axTitle(of: $0) == title } ?? (snapshot.windowIndex < windows.count ? windows[snapshot.windowIndex] : nil)
-        } else {
-            window = snapshot.windowIndex < windows.count ? windows[snapshot.windowIndex] : nil
+            return windows.first { axTitle(of: $0) == title }
+                ?? (snapshot.windowIndex < windows.count ? windows[snapshot.windowIndex] : nil)
         }
-        guard let window else { return }
+        return snapshot.windowIndex < windows.count ? windows[snapshot.windowIndex] : nil
+    }
+
+    private static func applySnapshot(_ snapshot: WindowSnapshot, isMinimized: Bool, to app: NSRunningApplication) {
+        let windows = axWindowList(for: app)
+        guard let window = matchWindow(snapshot, in: windows) else { return }
 
         if isMinimized {
             AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, kCFBooleanTrue)

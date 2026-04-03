@@ -108,9 +108,15 @@ final class MenuController: NSObject, NSMenuDelegate {
             let windows = WindowCapture.captureAll().filter { trackedBundleIDs.contains($0.appBundleID) }
             store.update(id: currentID, windows: windows)
 
-            let targetBundleIDs = Set(group.windows.map { $0.appBundleID })
-            let outgoing = trackedBundleIDs.subtracting(targetBundleIDs)
-            WindowRestorer.minimizeApps(outgoing)
+            // Minimize windows from the current group that have no match in the target group.
+            // Match per-window by title so that apps with windows in both groups (e.g. Chrome
+            // with Gmail in A and YouTube in B) are handled correctly at the window level.
+            let outgoing = currentGroup.windows.filter { current in
+                !group.windows.contains { target in
+                    target.appBundleID == current.appBundleID && titlesMatch(current, target)
+                }
+            }
+            WindowRestorer.minimizeWindows(outgoing)
         }
         WindowRestorer.restore(group: group)
         store.setCurrentGroup(id: group.id)
@@ -160,6 +166,14 @@ final class MenuController: NSObject, NSMenuDelegate {
         )
         store.save(group: group)
         store.setCurrentGroup(id: group.id)
+    }
+
+    /// Two snapshots match if they share a non-empty title; falls back to same index.
+    private func titlesMatch(_ a: WindowSnapshot, _ b: WindowSnapshot) -> Bool {
+        if let ta = a.windowTitle, let tb = b.windowTitle, !ta.isEmpty, !tb.isEmpty {
+            return ta == tb
+        }
+        return a.windowIndex == b.windowIndex
     }
 
     @objc private func openAccessibilitySettings() {
