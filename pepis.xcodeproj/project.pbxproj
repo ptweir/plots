@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		20ED5E0B13667D1138C1C36F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C351A70E6386571EBE49CF9 /* main.swift */; };
 		CCF61BBEE21CC239F868E559 /* ModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F05EC601082B906371F53A /* ModelsTests.swift */; };
+		CF3E3F43C4A4537059F829DD /* WindowCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604FFC02660A665ED4162524 /* WindowCapture.swift */; };
 		D596CEC20680720D84517FD8 /* GroupStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCA5EF2D04C6676D575CA1D /* GroupStore.swift */; };
 		E976152341B57F1F93065403 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF6B6978DDBEC1B99A46AD6 /* Models.swift */; };
 		F744EAD29A7C4A96FE3A7424 /* GroupStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3315A00B16EB28A1EC05E016 /* GroupStoreTests.swift */; };
@@ -29,6 +30,7 @@
 		3315A00B16EB28A1EC05E016 /* GroupStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStoreTests.swift; sourceTree = "<group>"; };
 		3FF6B6978DDBEC1B99A46AD6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		54754275599186B6A93B36F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		604FFC02660A665ED4162524 /* WindowCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowCapture.swift; sourceTree = "<group>"; };
 		60F05EC601082B906371F53A /* ModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsTests.swift; sourceTree = "<group>"; };
 		8C351A70E6386571EBE49CF9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		DCCA5EF2D04C6676D575CA1D /* GroupStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStore.swift; sourceTree = "<group>"; };
@@ -43,6 +45,7 @@
 				54754275599186B6A93B36F7 /* Info.plist */,
 				8C351A70E6386571EBE49CF9 /* main.swift */,
 				3FF6B6978DDBEC1B99A46AD6 /* Models.swift */,
+				604FFC02660A665ED4162524 /* WindowCapture.swift */,
 			);
 			path = pepis;
 			sourceTree = "<group>";
@@ -159,6 +162,7 @@
 			files = (
 				D596CEC20680720D84517FD8 /* GroupStore.swift in Sources */,
 				E976152341B57F1F93065403 /* Models.swift in Sources */,
+				CF3E3F43C4A4537059F829DD /* WindowCapture.swift in Sources */,
 				20ED5E0B13667D1138C1C36F /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
