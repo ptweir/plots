@@ -1,4 +1,4 @@
-// pepis/WindowRestorer.swift
+// plots/WindowRestorer.swift
 import AppKit
 import ApplicationServices
 

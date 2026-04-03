@@ -1,4 +1,4 @@
-// pepis/WindowCapture.swift
+// plots/WindowCapture.swift
 import AppKit
 import ApplicationServices
 

@@ -1,4 +1,4 @@
-// pepis/GroupStore.swift
+// plots/GroupStore.swift
 import Foundation
 
 final class GroupStore {
@@ -24,7 +24,7 @@ final class GroupStore {
     static func defaultSupportDir() -> URL {
         let base = FileManager.default
             .urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        return base.appendingPathComponent("pepis")
+        return base.appendingPathComponent("plots")
     }
 
     func save(group: Group) {

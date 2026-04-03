@@ -1,4 +1,4 @@
-// pepis/MenuController.swift
+// plots/MenuController.swift
 import AppKit
 import ApplicationServices
 
@@ -52,7 +52,7 @@ final class MenuController: NSObject, NSMenuDelegate {
         menu.addItem(save)
 
         menu.addItem(.separator())
-        menu.addItem(NSMenuItem(title: "Quit Pepis", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        menu.addItem(NSMenuItem(title: "Quit Plots", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
 
         statusItem?.menu = menu
     }

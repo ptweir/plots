@@ -1,4 +1,4 @@
-// pepis/Models.swift
+// plots/Models.swift
 import Foundation
 import CoreGraphics
 

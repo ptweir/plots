@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D7956E79F9152A8D6792B25F"
-               BuildableName = "pepis.app"
-               BlueprintName = "pepis"
-               ReferencedContainer = "container:pepis.xcodeproj">
+               BlueprintIdentifier = "9CB4541D291A904B43C5A6AA"
+               BuildableName = "plots.app"
+               BlueprintName = "plots"
+               ReferencedContainer = "container:plots.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,10 +29,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5B772BA1DDA323E2A3163038"
-               BuildableName = "pepis-tests.xctest"
-               BlueprintName = "pepis-tests"
-               ReferencedContainer = "container:pepis.xcodeproj">
+               BlueprintIdentifier = "275FC37B1F6776EDFBE41D80"
+               BuildableName = "plots-tests.xctest"
+               BlueprintName = "plots-tests"
+               ReferencedContainer = "container:plots.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,10 +46,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D7956E79F9152A8D6792B25F"
-            BuildableName = "pepis.app"
-            BlueprintName = "pepis"
-            ReferencedContainer = "container:pepis.xcodeproj">
+            BlueprintIdentifier = "9CB4541D291A904B43C5A6AA"
+            BuildableName = "plots.app"
+            BlueprintName = "plots"
+            ReferencedContainer = "container:plots.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -58,10 +58,10 @@
             parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5B772BA1DDA323E2A3163038"
-               BuildableName = "pepis-tests.xctest"
-               BlueprintName = "pepis-tests"
-               ReferencedContainer = "container:pepis.xcodeproj">
+               BlueprintIdentifier = "275FC37B1F6776EDFBE41D80"
+               BuildableName = "plots-tests.xctest"
+               BlueprintName = "plots-tests"
+               ReferencedContainer = "container:plots.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -82,10 +82,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D7956E79F9152A8D6792B25F"
-            BuildableName = "pepis.app"
-            BlueprintName = "pepis"
-            ReferencedContainer = "container:pepis.xcodeproj">
+            BlueprintIdentifier = "9CB4541D291A904B43C5A6AA"
+            BuildableName = "plots.app"
+            BlueprintName = "plots"
+            ReferencedContainer = "container:plots.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -101,10 +101,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D7956E79F9152A8D6792B25F"
-            BuildableName = "pepis.app"
-            BlueprintName = "pepis"
-            ReferencedContainer = "container:pepis.xcodeproj">
+            BlueprintIdentifier = "9CB4541D291A904B43C5A6AA"
+            BuildableName = "plots.app"
+            BlueprintName = "plots"
+            ReferencedContainer = "container:plots.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

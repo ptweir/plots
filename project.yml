@@ -1,46 +1,46 @@
-name: pepis
+name: plots
 options:
-  bundleIdPrefix: com.pepis
+  bundleIdPrefix: com.plots
   deploymentTarget:
     macOS: "13.0"
   createIntermediateGroups: true
 schemes:
-  pepis:
+  plots:
     build:
       targets:
-        pepis: all
-        pepis-tests: testing
+        plots: all
+        plots-tests: testing
     run:
       config: Debug
     test:
       targets:
-        - name: pepis-tests
+        - name: plots-tests
           randomExecutionOrder: false
 targets:
-  pepis:
+  plots:
     type: application
     platform: macOS
     sources:
-      - pepis
+      - plots
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.pepis.app
-        INFOPLIST_FILE: pepis/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.plots.app
+        INFOPLIST_FILE: plots/Info.plist
         SWIFT_VERSION: "5.9"
         CODE_SIGN_IDENTITY: "-"
         CODE_SIGNING_REQUIRED: "NO"
         CODE_SIGNING_ALLOWED: "NO"
-  pepis-tests:
+  plots-tests:
     type: bundle.unit-test
     platform: macOS
     sources:
-      - pepis-tests
+      - plots-tests
     dependencies:
-      - target: pepis
+      - target: plots
     settings:
       base:
         SWIFT_VERSION: "5.9"
-        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/pepis.app/Contents/MacOS/pepis"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/plots.app/Contents/MacOS/plots"
         BUNDLE_LOADER: "$(TEST_HOST)"
         CODE_SIGN_IDENTITY: "-"
         CODE_SIGNING_REQUIRED: "NO"

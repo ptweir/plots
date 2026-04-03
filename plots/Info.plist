@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleName</key>
-    <string>pepis</string>
+    <string>plots</string>
     <key>CFBundleIdentifier</key>
-    <string>com.pepis.app</string>
+    <string>com.plots.app</string>
     <key>CFBundleVersion</key>
     <string>1</string>
     <key>CFBundleShortVersionString</key>
@@ -19,6 +19,6 @@
     <key>LSUIElement</key>
     <true/>
     <key>NSAccessibilityUsageDescription</key>
-    <string>Pepis needs Accessibility access to read and restore window positions.</string>
+    <string>Plots needs Accessibility access to read and restore window positions.</string>
 </dict>
 </plist>

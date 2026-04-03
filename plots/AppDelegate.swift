@@ -1,4 +1,4 @@
-// pepis/AppDelegate.swift
+// plots/AppDelegate.swift
 import AppKit
 import ApplicationServices
 
