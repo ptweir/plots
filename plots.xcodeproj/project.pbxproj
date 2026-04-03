@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		268F010832A46BD0A7588621 /* HotkeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E230293AAF1C24589252D1 /* HotkeyManager.swift */; };
 		4F17EC55F1A2DA4AAFCA60D3 /* ModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC31ABAC6C596C5F602413A7 /* ModelsTests.swift */; };
 		7F1F407706AA90DCF5799A0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670D4798F50CD8FE71F38663 /* AppDelegate.swift */; };
 		9EE8FB0CAECF67665F49A3C0 /* GroupStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6208EE2419A59381CC4C64E /* GroupStoreTests.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		44E230293AAF1C24589252D1 /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
 		670D4798F50CD8FE71F38663 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8B7E58F25034B63662898023 /* plots-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "plots-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9385F810A2C63563DB276EB7 /* WindowRestorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowRestorer.swift; sourceTree = "<group>"; };
@@ -47,6 +49,7 @@
 			children = (
 				670D4798F50CD8FE71F38663 /* AppDelegate.swift */,
 				BF20623B0522C65F80961DE9 /* GroupStore.swift */,
+				44E230293AAF1C24589252D1 /* HotkeyManager.swift */,
 				A133E3F944E17255ABD84119 /* Info.plist */,
 				B710E6BBE2DA0397BE6512D2 /* MenuController.swift */,
 				BD1A721D0541727137B9B8FE /* Models.swift */,
@@ -159,6 +162,7 @@
 			files = (
 				7F1F407706AA90DCF5799A0E /* AppDelegate.swift in Sources */,
 				F77C13C324ECD52B4302A63E /* GroupStore.swift in Sources */,
+				268F010832A46BD0A7588621 /* HotkeyManager.swift in Sources */,
 				E193757AFFD60043A2B5A48F /* MenuController.swift in Sources */,
 				E5DD2AA0DB2CFC836826708A /* Models.swift in Sources */,
 				AD0C5D3D5BB558F78A165099 /* WindowCapture.swift in Sources */,

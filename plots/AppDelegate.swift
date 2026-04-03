@@ -18,6 +18,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem!
     var store: GroupStore!
     var menuController: MenuController!
+    var hotkeyManager: HotkeyManager!
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         requestAccessibilityPermission()
@@ -27,6 +28,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.button?.title = "⊞"
         statusItem.button?.font = NSFont.systemFont(ofSize: 14)
         menuController = MenuController(store: store, statusItem: statusItem)
+
+        hotkeyManager = HotkeyManager()
+        hotkeyManager.onCycle = { [weak self] in self?.menuController.cycleToNextGroup() }
+        hotkeyManager.start()
     }
 
     private func requestAccessibilityPermission() {

@@ -99,6 +99,18 @@ final class MenuController: NSObject, NSMenuDelegate {
 
     @objc private func restoreGroup(_ sender: NSMenuItem) {
         guard let group = group(for: sender) else { return }
+        performRestore(group: group)
+    }
+
+    func cycleToNextGroup() {
+        let groups = store.groups
+        guard !groups.isEmpty else { return }
+        let currentIndex = groups.firstIndex { $0.id == store.currentGroupID } ?? -1
+        let next = groups[(currentIndex + 1) % groups.count]
+        performRestore(group: next)
+    }
+
+    private func performRestore(group: Group) {
         // Auto-save current group state before switching (skip if restoring same group).
         if let currentID = store.currentGroupID, currentID != group.id,
            let currentGroup = store.groups.first(where: { $0.id == currentID }) {
