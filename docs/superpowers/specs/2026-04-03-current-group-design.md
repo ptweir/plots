@@ -102,7 +102,9 @@ Deep work        ▶  [Restore] [Update] [Edit context] [Delete]
 
 ## Error Handling
 
-- **currentGroupID references a deleted group:** treat as `nil` on load (validate against groups array)
+- **No current group (`currentGroupID` is nil):** first restore ever, or after a fresh install. Skip the auto-save step entirely — just restore and set the target as current.
+- **No groups saved yet:** menu shows "No groups yet" as before; restore and update flows are unreachable. `currentGroupID` stays `nil`.
+- **currentGroupID references a deleted group:** treat as `nil` on load (validate against groups array after loading)
 - **WindowCapture returns empty (no AX permission):** `update` is called with `[]` — silently replaces windows with empty array. This is acceptable; the user will see the warning in the menu if they try to restore.
 - **`update` called with unknown ID:** no-op, no error
 
