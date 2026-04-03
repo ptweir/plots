@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E55D94753E772FC32C2E7D7 /* WindowRestorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083A130E9976EEEEAAA2A692 /* WindowRestorer.swift */; };
-		20ED5E0B13667D1138C1C36F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C351A70E6386571EBE49CF9 /* main.swift */; };
+		932766332F28E7D2A74C6FC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E00D60279C867186A4B453 /* AppDelegate.swift */; };
 		A90C6C8807E4FF8EF423B39B /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB526D0B558941DA9F1AB1F6 /* MenuController.swift */; };
 		CCF61BBEE21CC239F868E559 /* ModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F05EC601082B906371F53A /* ModelsTests.swift */; };
 		CF3E3F43C4A4537059F829DD /* WindowCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604FFC02660A665ED4162524 /* WindowCapture.swift */; };
@@ -32,10 +32,10 @@
 		13B3D686819E74AEC2CD4DCE /* pepis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pepis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3315A00B16EB28A1EC05E016 /* GroupStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStoreTests.swift; sourceTree = "<group>"; };
 		3FF6B6978DDBEC1B99A46AD6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		49E00D60279C867186A4B453 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		54754275599186B6A93B36F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		604FFC02660A665ED4162524 /* WindowCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowCapture.swift; sourceTree = "<group>"; };
 		60F05EC601082B906371F53A /* ModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsTests.swift; sourceTree = "<group>"; };
-		8C351A70E6386571EBE49CF9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		DCCA5EF2D04C6676D575CA1D /* GroupStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStore.swift; sourceTree = "<group>"; };
 		E8CA0F88AD700A0DD03B5AF3 /* pepis-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "pepis-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB526D0B558941DA9F1AB1F6 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
@@ -45,9 +45,9 @@
 		851304BF58FBE1E08A711A38 /* pepis */ = {
 			isa = PBXGroup;
 			children = (
+				49E00D60279C867186A4B453 /* AppDelegate.swift */,
 				DCCA5EF2D04C6676D575CA1D /* GroupStore.swift */,
 				54754275599186B6A93B36F7 /* Info.plist */,
-				8C351A70E6386571EBE49CF9 /* main.swift */,
 				FB526D0B558941DA9F1AB1F6 /* MenuController.swift */,
 				3FF6B6978DDBEC1B99A46AD6 /* Models.swift */,
 				604FFC02660A665ED4162524 /* WindowCapture.swift */,
@@ -166,12 +166,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				932766332F28E7D2A74C6FC2 /* AppDelegate.swift in Sources */,
 				D596CEC20680720D84517FD8 /* GroupStore.swift in Sources */,
 				A90C6C8807E4FF8EF423B39B /* MenuController.swift in Sources */,
 				E976152341B57F1F93065403 /* Models.swift in Sources */,
 				CF3E3F43C4A4537059F829DD /* WindowCapture.swift in Sources */,
 				0E55D94753E772FC32C2E7D7 /* WindowRestorer.swift in Sources */,
-				20ED5E0B13667D1138C1C36F /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
