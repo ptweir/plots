@@ -5,12 +5,28 @@ import ApplicationServices
 enum WindowRestorer {
     static func restore(group: Group) {
         for snapshot in group.windows {
+            let minimized = snapshot.isMinimized ?? false
             if let app = runningApp(bundleID: snapshot.appBundleID) {
-                setFrame(snapshot.frame, windowIndex: snapshot.windowIndex, windowTitle: snapshot.windowTitle, of: app)
-            } else {
+                applySnapshot(snapshot, isMinimized: minimized, to: app)
+            } else if !minimized {
+                // Don't launch an app just to immediately minimize it
                 launch(bundleID: snapshot.appBundleID) { app in
-                    self.setFrame(snapshot.frame, windowIndex: snapshot.windowIndex, windowTitle: snapshot.windowTitle, of: app)
+                    self.applySnapshot(snapshot, isMinimized: false, to: app)
                 }
+            }
+        }
+    }
+
+    /// Minimizes all windows for each app in the given set of bundle IDs.
+    static func minimizeApps(_ bundleIDs: Set<String>) {
+        for bundleID in bundleIDs {
+            guard let app = runningApp(bundleID: bundleID) else { continue }
+            let axApp = AXUIElementCreateApplication(app.processIdentifier)
+            var windowsRef: CFTypeRef?
+            guard AXUIElementCopyAttributeValue(axApp, kAXWindowsAttribute as CFString, &windowsRef) == .success,
+                  let windows = windowsRef as? [AXUIElement] else { continue }
+            for window in windows {
+                AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, kCFBooleanTrue)
             }
         }
     }
@@ -22,7 +38,7 @@ enum WindowRestorer {
             .first { $0.bundleIdentifier == bundleID }
     }
 
-    private static func setFrame(_ frame: CGRect, windowIndex: Int, windowTitle: String?, of app: NSRunningApplication) {
+    private static func applySnapshot(_ snapshot: WindowSnapshot, isMinimized: Bool, to app: NSRunningApplication) {
         let axApp = AXUIElementCreateApplication(app.processIdentifier)
         var windowsRef: CFTypeRef?
         guard AXUIElementCopyAttributeValue(axApp, kAXWindowsAttribute as CFString, &windowsRef) == .success,
@@ -30,19 +46,26 @@ enum WindowRestorer {
 
         // Prefer matching by title (stable across reordering); fall back to index.
         let window: AXUIElement?
-        if let title = windowTitle, !title.isEmpty {
-            window = windows.first { axTitle(of: $0) == title } ?? (windowIndex < windows.count ? windows[windowIndex] : nil)
+        if let title = snapshot.windowTitle, !title.isEmpty {
+            window = windows.first { axTitle(of: $0) == title } ?? (snapshot.windowIndex < windows.count ? windows[snapshot.windowIndex] : nil)
         } else {
-            window = windowIndex < windows.count ? windows[windowIndex] : nil
+            window = snapshot.windowIndex < windows.count ? windows[snapshot.windowIndex] : nil
         }
         guard let window else { return }
-        var origin = frame.origin
-        var size = frame.size
-        if let posValue = AXValueCreate(.cgPoint, &origin) {
-            AXUIElementSetAttributeValue(window, kAXPositionAttribute as CFString, posValue)
-        }
-        if let sizeValue = AXValueCreate(.cgSize, &size) {
-            AXUIElementSetAttributeValue(window, kAXSizeAttribute as CFString, sizeValue)
+
+        if isMinimized {
+            AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, kCFBooleanTrue)
+        } else {
+            // Unminimize first so position/size changes take effect
+            AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, kCFBooleanFalse)
+            var origin = snapshot.frame.origin
+            var size = snapshot.frame.size
+            if let posValue = AXValueCreate(.cgPoint, &origin) {
+                AXUIElementSetAttributeValue(window, kAXPositionAttribute as CFString, posValue)
+            }
+            if let sizeValue = AXValueCreate(.cgSize, &size) {
+                AXUIElementSetAttributeValue(window, kAXSizeAttribute as CFString, sizeValue)
+            }
         }
     }
 

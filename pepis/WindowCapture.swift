@@ -20,17 +20,28 @@ enum WindowCapture {
                   let windows = windowsRef as? [AXUIElement] else { continue }
 
             for (index, window) in windows.enumerated() {
-                guard let frame = axFrame(of: window) else { continue }
+                let minimized = axBool(kAXMinimizedAttribute, of: window) ?? false
+                // Minimized windows may not expose a frame via AX; use .zero as placeholder
+                // (frame is irrelevant when restoring as minimized).
+                let frame = axFrame(of: window) ?? .zero
                 snapshots.append(WindowSnapshot(
                     appBundleID: bundleID,
                     appName: app.localizedName ?? bundleID,
                     windowIndex: index,
                     windowTitle: axTitle(of: window),
+                    isMinimized: minimized,
                     frame: frame
                 ))
             }
         }
         return snapshots
+    }
+
+    private static func axBool(_ attribute: String, of element: AXUIElement) -> Bool? {
+        var ref: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(element, attribute as CFString, &ref) == .success,
+              let value = ref as? Bool else { return nil }
+        return value
     }
 
     private static func axTitle(of element: AXUIElement) -> String? {

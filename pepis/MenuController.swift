@@ -99,9 +99,18 @@ final class MenuController: NSObject, NSMenuDelegate {
 
     @objc private func restoreGroup(_ sender: NSMenuItem) {
         guard let group = group(for: sender) else { return }
-        // Auto-save current group state before switching (skip if restoring same group)
-        if let currentID = store.currentGroupID, currentID != group.id {
-            store.update(id: currentID, windows: WindowCapture.captureAll())
+        // Auto-save current group state before switching (skip if restoring same group).
+        // Only update positions for apps already tracked by the group — don't add new apps.
+        // Then minimize apps belonging to the current group that have no place in the target group.
+        if let currentID = store.currentGroupID, currentID != group.id,
+           let currentGroup = store.groups.first(where: { $0.id == currentID }) {
+            let trackedBundleIDs = Set(currentGroup.windows.map { $0.appBundleID })
+            let windows = WindowCapture.captureAll().filter { trackedBundleIDs.contains($0.appBundleID) }
+            store.update(id: currentID, windows: windows)
+
+            let targetBundleIDs = Set(group.windows.map { $0.appBundleID })
+            let outgoing = trackedBundleIDs.subtracting(targetBundleIDs)
+            WindowRestorer.minimizeApps(outgoing)
         }
         WindowRestorer.restore(group: group)
         store.setCurrentGroup(id: group.id)

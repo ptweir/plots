@@ -6,7 +6,8 @@ struct WindowSnapshot: Codable {
     var appBundleID: String
     var appName: String
     var windowIndex: Int
-    var windowTitle: String?   // nil in snapshots saved before this field was added
+    var windowTitle: String?      // nil in snapshots saved before this field was added
+    var isMinimized: Bool?        // nil treated as false (backward compat)
     // CGRect is not Codable — store components as Doubles
     var frameX: Double
     var frameY: Double
@@ -19,11 +20,12 @@ extension WindowSnapshot {
         CGRect(x: frameX, y: frameY, width: frameWidth, height: frameHeight)
     }
 
-    init(appBundleID: String, appName: String, windowIndex: Int, windowTitle: String? = nil, frame: CGRect) {
+    init(appBundleID: String, appName: String, windowIndex: Int, windowTitle: String? = nil, isMinimized: Bool = false, frame: CGRect) {
         self.appBundleID = appBundleID
         self.appName = appName
         self.windowIndex = windowIndex
         self.windowTitle = windowTitle
+        self.isMinimized = isMinimized
         self.frameX = frame.origin.x
         self.frameY = frame.origin.y
         self.frameWidth = frame.size.width
