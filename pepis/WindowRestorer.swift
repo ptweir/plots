@@ -26,7 +26,6 @@ enum WindowRestorer {
             for snapshot in windowSnapshots {
                 guard let window = matchWindow(snapshot, in: axWindows) else { continue }
                 AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, kCFBooleanTrue)
-                AXUIElementPerformAction(window, "AXMinimize" as CFString as CFString)
             }
         }
     }
@@ -71,11 +70,10 @@ enum WindowRestorer {
 
         if isMinimized {
             AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, kCFBooleanTrue)
-            AXUIElementPerformAction(window, "AXMinimize" as CFString as CFString)
         } else {
-            // Use both attribute and raise action — some apps (e.g. Chrome) respond to one but not the other
             AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, kCFBooleanFalse)
             AXUIElementPerformAction(window, kAXRaiseAction as CFString)
+            app.activate(options: .activateIgnoringOtherApps)
             var origin = snapshot.frame.origin
             var size = snapshot.frame.size
             if let posValue = AXValueCreate(.cgPoint, &origin) {

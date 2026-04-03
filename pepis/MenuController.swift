@@ -100,18 +100,18 @@ final class MenuController: NSObject, NSMenuDelegate {
     @objc private func restoreGroup(_ sender: NSMenuItem) {
         guard let group = group(for: sender) else { return }
         // Auto-save current group state before switching (skip if restoring same group).
-        // Only update positions for apps already tracked by the group — don't add new apps.
-        // Then minimize apps belonging to the current group that have no place in the target group.
         if let currentID = store.currentGroupID, currentID != group.id,
            let currentGroup = store.groups.first(where: { $0.id == currentID }) {
-            let trackedBundleIDs = Set(currentGroup.windows.map { $0.appBundleID })
-            let windows = WindowCapture.captureAll().filter { trackedBundleIDs.contains($0.appBundleID) }
-            store.update(id: currentID, windows: windows)
 
-            // Minimize windows from the current group that have no match in the target group.
-            // Match per-window by title so that apps with windows in both groups (e.g. Chrome
-            // with Gmail in A and YouTube in B) are handled correctly at the window level.
-            let outgoing = currentGroup.windows.filter { current in
+            // Refresh frames for windows already in the group. Never add windows that
+            // aren't already tracked — that's what "Update" is for.
+            let allLive = WindowCapture.captureAll()
+            let refreshed = refreshedWindows(from: currentGroup.windows, live: allLive)
+            store.update(id: currentID, windows: refreshed)
+
+            // Minimize outgoing windows: those in the current group with no match in target.
+            // Use the refreshed snapshots so frame matching in minimizeWindows gets live frames.
+            let outgoing = refreshed.filter { current in
                 !group.windows.contains { target in
                     target.appBundleID == current.appBundleID && titlesMatch(current, target)
                 }
@@ -120,6 +120,40 @@ final class MenuController: NSObject, NSMenuDelegate {
         }
         WindowRestorer.restore(group: group)
         store.setCurrentGroup(id: group.id)
+    }
+
+    /// For each saved window, find its current live position and return an updated snapshot.
+    /// Preserves group composition — never adds windows that aren't already in the group.
+    private func refreshedWindows(from saved: [WindowSnapshot], live: [WindowSnapshot]) -> [WindowSnapshot] {
+        return saved.map { snap in
+            let candidates = live.filter { $0.appBundleID == snap.appBundleID }
+
+            // 1. Exact title match
+            if let title = snap.windowTitle, !title.isEmpty,
+               let match = candidates.first(where: { $0.windowTitle == title }) {
+                return match
+            }
+            // 2. Only one candidate for this app — unambiguous
+            if candidates.count == 1 { return candidates[0] }
+            // 3. Frame match (reliable when window hasn't moved since last save)
+            if snap.frame != .zero,
+               let match = candidates.first(where: { framesApproxEqual($0.frame, snap.frame) }) {
+                return match
+            }
+            // 4. Index fallback
+            if let match = candidates.first(where: { $0.windowIndex == snap.windowIndex }) {
+                return match
+            }
+            // 5. Window not found — keep saved snapshot (window may have been closed)
+            return snap
+        }
+    }
+
+    private func framesApproxEqual(_ a: CGRect, _ b: CGRect) -> Bool {
+        return abs(a.origin.x - b.origin.x) < 1 &&
+               abs(a.origin.y - b.origin.y) < 1 &&
+               abs(a.size.width - b.size.width) < 1 &&
+               abs(a.size.height - b.size.height) < 1
     }
 
     @objc private func updateGroup(_ sender: NSMenuItem) {
