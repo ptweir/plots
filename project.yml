@@ -1,0 +1,47 @@
+name: pepis
+options:
+  bundleIdPrefix: com.pepis
+  deploymentTarget:
+    macOS: "13.0"
+  createIntermediateGroups: true
+schemes:
+  pepis:
+    build:
+      targets:
+        pepis: all
+        pepis-tests: testing
+    run:
+      config: Debug
+    test:
+      targets:
+        - name: pepis-tests
+          randomExecutionOrder: false
+targets:
+  pepis:
+    type: application
+    platform: macOS
+    sources:
+      - pepis
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.pepis.app
+        INFOPLIST_FILE: pepis/Info.plist
+        SWIFT_VERSION: "5.9"
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGNING_REQUIRED: "NO"
+        CODE_SIGNING_ALLOWED: "NO"
+  pepis-tests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - pepis-tests
+    dependencies:
+      - target: pepis
+    settings:
+      base:
+        SWIFT_VERSION: "5.9"
+        TEST_HOST: ""
+        BUNDLE_LOADER: ""
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGNING_REQUIRED: "NO"
+        CODE_SIGNING_ALLOWED: "NO"
