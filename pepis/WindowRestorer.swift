@@ -26,6 +26,7 @@ enum WindowRestorer {
             for snapshot in windowSnapshots {
                 guard let window = matchWindow(snapshot, in: axWindows) else { continue }
                 AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, kCFBooleanTrue)
+                AXUIElementPerformAction(window, "AXMinimize" as CFString as CFString)
             }
         }
     }
@@ -45,12 +46,22 @@ enum WindowRestorer {
         return windows
     }
 
-    /// Finds the AX window matching a snapshot: title first, index as fallback.
+    /// Finds the AX window matching a snapshot.
+    /// Priority: exact title → saved frame → index.
+    /// Frame matching is reliable when windows haven't moved since the snapshot was taken
+    /// (which is guaranteed for auto-save, since positions are captured right before minimising).
     private static func matchWindow(_ snapshot: WindowSnapshot, in windows: [AXUIElement]) -> AXUIElement? {
-        if let title = snapshot.windowTitle, !title.isEmpty {
-            return windows.first { axTitle(of: $0) == title }
-                ?? (snapshot.windowIndex < windows.count ? windows[snapshot.windowIndex] : nil)
+        // 1. Exact title match
+        if let title = snapshot.windowTitle, !title.isEmpty,
+           let match = windows.first(where: { axTitle(of: $0) == title }) {
+            return match
         }
+        // 2. Frame match — handles apps like Chrome where tab titles change dynamically
+        if snapshot.frame != .zero,
+           let match = windows.first(where: { axFrame(of: $0) == snapshot.frame }) {
+            return match
+        }
+        // 3. Index fallback
         return snapshot.windowIndex < windows.count ? windows[snapshot.windowIndex] : nil
     }
 
@@ -60,9 +71,11 @@ enum WindowRestorer {
 
         if isMinimized {
             AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, kCFBooleanTrue)
+            AXUIElementPerformAction(window, "AXMinimize" as CFString as CFString)
         } else {
-            // Unminimize first so position/size changes take effect
+            // Use both attribute and raise action — some apps (e.g. Chrome) respond to one but not the other
             AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, kCFBooleanFalse)
+            AXUIElementPerformAction(window, kAXRaiseAction as CFString)
             var origin = snapshot.frame.origin
             var size = snapshot.frame.size
             if let posValue = AXValueCreate(.cgPoint, &origin) {
@@ -72,6 +85,21 @@ enum WindowRestorer {
                 AXUIElementSetAttributeValue(window, kAXSizeAttribute as CFString, sizeValue)
             }
         }
+    }
+
+    private static func axFrame(of element: AXUIElement) -> CGRect? {
+        var posRef: CFTypeRef?
+        var sizeRef: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(element, kAXPositionAttribute as CFString, &posRef) == .success,
+              AXUIElementCopyAttributeValue(element, kAXSizeAttribute as CFString, &sizeRef) == .success,
+              posRef != nil, sizeRef != nil else { return nil }
+        let posValue = posRef as! AXValue
+        let sizeValue = sizeRef as! AXValue
+        var position = CGPoint.zero
+        var size = CGSize.zero
+        AXValueGetValue(posValue, .cgPoint, &position)
+        AXValueGetValue(sizeValue, .cgSize, &size)
+        return CGRect(origin: position, size: size)
     }
 
     private static func axTitle(of element: AXUIElement) -> String? {
