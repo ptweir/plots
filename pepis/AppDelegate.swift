@@ -21,6 +21,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func requestAccessibilityPermission() {
         // Shows the system permission dialog on first launch if not yet granted
         let options = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as String: true] as CFDictionary
-        AXIsProcessTrustedWithOptions(options)
+        _ = AXIsProcessTrustedWithOptions(options)
     }
 }

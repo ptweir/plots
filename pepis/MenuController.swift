@@ -14,7 +14,7 @@ final class MenuController: NSObject {
         rebuild()
     }
 
-    func rebuild() {
+    private func rebuild() {
         let menu = NSMenu()
 
         // Warn if Accessibility permission is not granted

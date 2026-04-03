@@ -37,14 +37,14 @@ enum WindowCapture {
         var sizeRef: CFTypeRef?
         guard AXUIElementCopyAttributeValue(element, kAXPositionAttribute as CFString, &posRef) == .success,
               AXUIElementCopyAttributeValue(element, kAXSizeAttribute as CFString, &sizeRef) == .success,
-              let posValue = posRef, CFGetTypeID(posValue) == AXValueGetTypeID(),
-              let sizeValue = sizeRef, CFGetTypeID(sizeValue) == AXValueGetTypeID()
+              let posValue = posRef as! AXValue?,
+              let sizeValue = sizeRef as! AXValue?
         else { return nil }
 
         var position = CGPoint.zero
         var size = CGSize.zero
-        AXValueGetValue(posValue as! AXValue, .cgPoint, &position)
-        AXValueGetValue(sizeValue as! AXValue, .cgSize, &size)
+        AXValueGetValue(posValue, .cgPoint, &position)
+        AXValueGetValue(sizeValue, .cgSize, &size)
         return CGRect(origin: position, size: size)
     }
 }
