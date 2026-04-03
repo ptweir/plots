@@ -2,7 +2,7 @@
 import AppKit
 import ApplicationServices
 
-final class MenuController: NSObject {
+final class MenuController: NSObject, NSMenuDelegate {
     private let store: GroupStore
     private weak var statusItem: NSStatusItem?
 
@@ -14,8 +14,14 @@ final class MenuController: NSObject {
         rebuild()
     }
 
+    // Rebuild each time the menu is about to open so AX permission state is always fresh
+    func menuWillOpen(_ menu: NSMenu) {
+        rebuild()
+    }
+
     private func rebuild() {
         let menu = NSMenu()
+        menu.delegate = self
 
         // Warn if Accessibility permission is not granted
         if !AXIsProcessTrusted() {
