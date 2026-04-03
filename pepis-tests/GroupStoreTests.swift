@@ -81,4 +81,100 @@ final class GroupStoreTests: XCTestCase {
         store.delete(id: group.id)
         XCTAssertEqual(callCount, 1)
     }
+
+    func testCurrentGroupIDStartsNil() {
+        XCTAssertNil(store.currentGroupID)
+    }
+
+    func testSetCurrentGroupPersists() {
+        let group = Group(id: UUID(), name: "Work", createdAt: Date(), windows: [])
+        store.save(group: group)
+        store.setCurrentGroup(id: group.id)
+
+        let reloaded = GroupStore(supportDir: tempDir)
+        XCTAssertEqual(reloaded.currentGroupID, group.id)
+    }
+
+    func testSetCurrentGroupNilClearsPersistence() {
+        let group = Group(id: UUID(), name: "Work", createdAt: Date(), windows: [])
+        store.save(group: group)
+        store.setCurrentGroup(id: group.id)
+        store.setCurrentGroup(id: nil)
+
+        let reloaded = GroupStore(supportDir: tempDir)
+        XCTAssertNil(reloaded.currentGroupID)
+    }
+
+    func testStaleCurrentGroupIDBecomesNil() {
+        let group = Group(id: UUID(), name: "Work", createdAt: Date(), windows: [])
+        store.save(group: group)
+        store.setCurrentGroup(id: group.id)
+        store.delete(id: group.id)
+
+        let reloaded = GroupStore(supportDir: tempDir)
+        XCTAssertNil(reloaded.currentGroupID)
+    }
+
+    func testDeleteCurrentGroupClearsCurrentGroupID() {
+        let group = Group(id: UUID(), name: "Work", createdAt: Date(), windows: [])
+        store.save(group: group)
+        store.setCurrentGroup(id: group.id)
+        store.delete(id: group.id)
+        XCTAssertNil(store.currentGroupID)
+    }
+
+    func testUpdateReplacesWindows() {
+        let group = Group(id: UUID(), name: "Work", createdAt: Date(), windows: [])
+        store.save(group: group)
+        let snapshot = WindowSnapshot(
+            appBundleID: "com.apple.Safari",
+            appName: "Safari",
+            windowIndex: 0,
+            frame: CGRect(x: 0, y: 0, width: 800, height: 600)
+        )
+        store.update(id: group.id, windows: [snapshot])
+        XCTAssertEqual(store.groups[0].windows.count, 1)
+        XCTAssertEqual(store.groups[0].windows[0].appBundleID, "com.apple.Safari")
+    }
+
+    func testUpdatePersists() {
+        let group = Group(id: UUID(), name: "Work", createdAt: Date(), windows: [])
+        store.save(group: group)
+        let snapshot = WindowSnapshot(
+            appBundleID: "com.apple.Safari",
+            appName: "Safari",
+            windowIndex: 0,
+            frame: CGRect(x: 0, y: 0, width: 800, height: 600)
+        )
+        store.update(id: group.id, windows: [snapshot])
+
+        let reloaded = GroupStore(supportDir: tempDir)
+        XCTAssertEqual(reloaded.groups[0].windows.count, 1)
+    }
+
+    func testUpdateWithUnknownIDIsNoOp() {
+        let group = Group(id: UUID(), name: "Work", createdAt: Date(), windows: [])
+        store.save(group: group)
+        store.update(id: UUID(), windows: [])
+        XCTAssertEqual(store.groups.count, 1)
+        XCTAssertEqual(store.groups[0].windows.count, 0)
+    }
+
+    func testUpdateCallsOnChange() {
+        let group = Group(id: UUID(), name: "Work", createdAt: Date(), windows: [])
+        store.save(group: group)
+        var callCount = 0
+        store.onChange = { callCount += 1 }
+        store.update(id: group.id, windows: [])
+        XCTAssertEqual(callCount, 1)
+    }
+
+    func testSetCurrentGroupCallsOnChange() {
+        let group = Group(id: UUID(), name: "Work", createdAt: Date(), windows: [])
+        store.save(group: group)
+        var callCount = 0
+        store.onChange = { callCount += 1 }
+        store.setCurrentGroup(id: group.id)
+        XCTAssertEqual(callCount, 1)
+    }
 }
