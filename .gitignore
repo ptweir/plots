@@ -1,0 +1,12 @@
+# Xcode
+*.xcuserstate
+xcuserdata/
+DerivedData/
+*.xcworkspace
+!default.xcworkspace
+
+# Superpowers brainstorm sessions
+.superpowers/
+
+# macOS
+.DS_Store
