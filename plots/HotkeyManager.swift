@@ -2,14 +2,13 @@
 import AppKit
 import ApplicationServices
 
-/// Listens for Cmd+CapsLock globally and fires `onCycle`.
+/// Listens for Cmd+Esc globally and fires `onCycle`.
 /// Uses a CGEventTap (requires Accessibility permission, which Plots already holds).
 final class HotkeyManager {
     // Weak reference accessible from the @convention(c) callback, which cannot capture context.
     private static weak var current: HotkeyManager?
 
     private var eventTap: CFMachPort?
-    private var lastFire: Date = .distantPast
     var onCycle: (() -> Void)?
 
     init() {
@@ -19,9 +18,9 @@ final class HotkeyManager {
     func start() {
         guard AXIsProcessTrusted() else { return }
 
-        let mask = CGEventMask(1 << CGEventType.flagsChanged.rawValue)
+        let mask = CGEventMask(1 << CGEventType.keyDown.rawValue)
         let callback: CGEventTapCallBack = { _, type, event, _ in
-            guard type == .flagsChanged else { return Unmanaged.passRetained(event) }
+            guard type == .keyDown else { return Unmanaged.passRetained(event) }
             return HotkeyManager.current?.handle(event: event) ?? Unmanaged.passRetained(event)
         }
 
@@ -41,19 +40,13 @@ final class HotkeyManager {
     }
 
     private func handle(event: CGEvent) -> Unmanaged<CGEvent>? {
-        // CapsLock keyCode = 57 (0x39); must be held with Command
-        guard event.getIntegerValueField(.keyboardEventKeycode) == 57,
+        // Escape keyCode = 53; must be held with Command
+        guard event.getIntegerValueField(.keyboardEventKeycode) == 53,
               event.flags.contains(.maskCommand) else {
             return Unmanaged.passRetained(event)
         }
-
-        // Debounce: some macOS versions fire flagsChanged on both press and release
-        let now = Date()
-        guard now.timeIntervalSince(lastFire) > 0.3 else { return nil }
-        lastFire = now
-
         DispatchQueue.main.async { [weak self] in self?.onCycle?() }
-        return nil // consume the event so CapsLock doesn't toggle
+        return nil // consume the event
     }
 
     deinit {
