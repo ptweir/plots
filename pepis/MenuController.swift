@@ -61,12 +61,19 @@ final class MenuController: NSObject, NSMenuDelegate {
 
     private func groupMenuItem(for group: Group) -> NSMenuItem {
         let item = NSMenuItem(title: group.name, action: nil, keyEquivalent: "")
+        item.state = group.id == store.currentGroupID ? .on : .off
+
         let sub = NSMenu()
 
         let restore = NSMenuItem(title: "Restore", action: #selector(restoreGroup(_:)), keyEquivalent: "")
         restore.representedObject = group.id.uuidString
         restore.target = self
         sub.addItem(restore)
+
+        let update = NSMenuItem(title: "Update", action: #selector(updateGroup(_:)), keyEquivalent: "")
+        update.representedObject = group.id.uuidString
+        update.target = self
+        sub.addItem(update)
 
         let edit = NSMenuItem(title: "Edit context", action: #selector(editContext(_:)), keyEquivalent: "")
         edit.representedObject = group.id.uuidString
@@ -92,13 +99,23 @@ final class MenuController: NSObject, NSMenuDelegate {
 
     @objc private func restoreGroup(_ sender: NSMenuItem) {
         guard let group = group(for: sender) else { return }
+        // Auto-save current group state before switching (skip if restoring same group)
+        if let currentID = store.currentGroupID, currentID != group.id {
+            store.update(id: currentID, windows: WindowCapture.captureAll())
+        }
         WindowRestorer.restore(group: group)
+        store.setCurrentGroup(id: group.id)
+    }
+
+    @objc private func updateGroup(_ sender: NSMenuItem) {
+        guard let group = group(for: sender) else { return }
+        store.update(id: group.id, windows: WindowCapture.captureAll())
+        store.setCurrentGroup(id: group.id)
     }
 
     @objc private func editContext(_ sender: NSMenuItem) {
         guard let group = group(for: sender) else { return }
         let url = store.contextFileURL(for: group)
-        // Re-create if somehow missing
         if !FileManager.default.fileExists(atPath: url.path) {
             try? "".write(to: url, atomically: true, encoding: .utf8)
         }
@@ -133,6 +150,7 @@ final class MenuController: NSObject, NSMenuDelegate {
             windows: WindowCapture.captureAll()
         )
         store.save(group: group)
+        store.setCurrentGroup(id: group.id)
     }
 
     @objc private func openAccessibilitySettings() {
